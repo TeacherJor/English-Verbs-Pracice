@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irregular Verbs - Pro Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-card: #ffffff;
+            --bg-input: #f7f7f7;
+            --text-main: #4b4b4b;
+            --text-muted: #afafaf;
+            --border-light: #e5e5e5;
+            --border-thick: 2px solid #e5e5e5;
+            --green-main: #58cc02;
+            --green-shadow: #58a700;
+            --green-light: #d7ffb8;
+            --blue-main: #1cb0f6;
+            --blue-shadow: #1899d6;
+            --red-main: #ff4b4b;
+            --red-shadow: #ea2b2b;
+            --red-light: #ffdfe0;
+            --yellow-main: #ffc800;
+            --yellow-shadow: #e5b400;
+            --purple-main: #ce82ff;
+            --orange-main: #ff9600;
+            --orange-shadow: #e08600;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ═══ HEADER ═══ */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            border-bottom: var(--border-thick);
+            background: var(--bg-card);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+
+        .logo-icon {
+            background: var(--green-main); color: white;
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 900;
+            border-bottom: 3px solid var(--green-shadow);
+        }
+
+        h1 { font-size: 1.5rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+
+        .header-stats { display: flex; gap: 20px; font-weight: 700; color: var(--text-muted); }
+        .stat-item { display: flex; align-items: center; gap: 6px; }
+        .stat-icon { color: var(--yellow-main); font-size: 1.2rem; }
+
+        main { padding: 40px; max-width: 1000px; margin: 0 auto; width: 100%; flex-grow: 1; }
+
+        /* ═══ NOMBRE BANNER ═══ */
+        .name-banner {
+            background: var(--bg-input);
+            border: 2px solid var(--border-light);
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .name-banner .name-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .name-banner .name-info p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .name-banner .name-info p strong {
+            color: var(--text-main);
+        }
+
+        .name-banner input {
+            width: 220px;
+            padding: 10px 16px;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            background: white;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .name-banner input:focus {
+            border-color: var(--blue-main);
+            box-shadow: 0 0 0 4px rgba(28,176,246,0.1);
+        }
+
+        .name-banner input::placeholder {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ═══ CONTROLES ═══ */
+        .controls-wrapper {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px; flex-wrap: wrap; gap: 20px;
+        }
+
+        .mode-tabs {
+            display: flex; background: var(--bg-input); padding: 4px;
+            border-radius: 16px; border: 2px solid var(--border-light);
+        }
+
+        .tab-btn {
+            background: transparent; border: none; padding: 10px 20px;
+            font-size: 1rem; font-weight: 700; color: var(--text-muted);
+            border-radius: 12px; cursor: pointer; transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card); color: var(--blue-main);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid var(--border-light);
+        }
+
+        .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: var(--blue-main); color: white; border: none;
+            border-bottom: 4px solid var(--blue-shadow); border-radius: 16px;
+            padding: 12px 24px; font-size: 1rem; font-weight: 800;
+            text-transform: uppercase; cursor: pointer;
+            transition: transform 0.1s, border-bottom-width 0.1s;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .btn-primary:active { transform: translateY(4px); border-bottom-width: 0px; margin-bottom: 4px; }
+        .btn-success { background: var(--green-main); border-bottom-color: var(--green-shadow); }
+        .btn-save { background: var(--orange-main); border-bottom-color: var(--orange-shadow); }
+        .btn-send { background: var(--purple-main); border-bottom-color: #b06ce0; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* ═══ TABLAS ═══ */
+        .card-container {
+            background: var(--bg-card); border-radius: 20px;
+            border: 2px solid var(--border-light); overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: var(--bg-input); border-bottom: 2px solid var(--border-light); }
+        th { padding: 15px 20px; text-align: left; font-weight: 800; color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.2s; }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: #fafafa; }
+        td { padding: 15px 20px; vertical-align: middle; font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+        .col-es { color: var(--text-muted); font-weight: 600; }
+
+        /* ═══ INPUTS EXAMEN ═══ */
+        .verb-input {
+            width: 100%; background: var(--bg-input);
+            border: 2px solid var(--border-light); border-radius: 12px;
+            padding: 10px 15px; font-size: 1.1rem; font-weight: 700;
+            color: var(--text-main); outline: none; transition: all 0.2s;
+        }
+        .verb-input:focus { background: var(--bg-card); border-color: var(--blue-main); box-shadow: 0 0 0 4px rgba(28,176,246,0.1); }
+        .verb-input.correct { background: var(--green-light); border-color: var(--green-main); color: var(--green-shadow); }
+        .verb-input.incorrect { background: var(--red-light); border-color: var(--red-main); color: var(--red-shadow); }
+        .correction-badge { display: block; margin-top: 8px; font-size: 0.9rem; color: var(--red-main); font-weight: 800; }
+
+        /* ═══ FLASHCARDS ═══ */
+        .flashcard-wrapper { display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 20px 0; }
+        .progress-container { width: 100%; max-width: 600px; height: 16px; background: var(--bg-input); border-radius: 20px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--green-main); border-radius: 20px; transition: width 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .flashcard { width: 100%; max-width: 600px; min-height: 350px; background: var(--bg-card); border: 2px solid var(--border-light); border-radius: 24px; border-bottom: 6px solid var(--border-light); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: transform 0.2s, border-bottom-width 0.2s; user-select: none; padding: 40px; }
+        .flashcard:active { transform: translateY(4px); border-bottom-width: 2px; margin-bottom: 4px; }
+        .fc-type { position: absolute; top: 25px; font-weight: 800; color: var(--purple-main); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+        .fc-word { font-size: clamp(3rem,6vw,4.5rem); font-weight: 900; color: var(--text-main); text-align: center; margin-bottom: 10px; }
+        .fc-answer { display: none; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; width: 100%; border-top: 2px dashed var(--border-light); padding-top: 25px; }
+        .fc-answer.visible { display: flex; }
+        .answer-row { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 300px; }
+        .answer-label { font-weight: 800; color: var(--text-muted); font-size: 0.9rem; background: var(--bg-input); padding: 4px 10px; border-radius: 8px; }
+        .answer-value { font-weight: 800; font-size: 1.4rem; color: var(--text-main); }
+        .answer-value.es { color: var(--blue-main); }
+        .fc-hint { position: absolute; bottom: 25px; font-size: 0.9rem; color: var(--text-muted); font-weight: 700; }
+        .nav-controls { display: flex; align-items: center; gap: 20px; }
+        .nav-btn { background: var(--bg-card); border: 2px solid var(--border-light); border-bottom: 4px solid var(--border-light); border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; color: var(--text-main); transition: all 0.1s; }
+        .nav-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .fc-counter { font-weight: 800; color: var(--text-muted); font-size: 1.1rem; min-width: 60px; text-align: center; }
+
+        /* ═══ RESULTADOS ═══ */
+        .results-panel { display: none; background: var(--bg-card); border-radius: 20px; padding: 40px 40px 30px; text-align: center; margin-top: 30px; overflow: hidden; position: relative; }
+        .results-panel.tier-perfect { border: 3px solid var(--green-main); box-shadow: 0 10px 40px rgba(88,204,2,0.15); }
+        .results-panel.tier-great { border: 3px solid var(--blue-main); box-shadow: 0 10px 40px rgba(28,176,246,0.15); }
+        .results-panel.tier-good { border: 3px solid var(--yellow-main); box-shadow: 0 10px 40px rgba(255,200,0,0.15); }
+        .results-panel.tier-try { border: 3px solid var(--orange-main); box-shadow: 0 10px 40px rgba(255,150,0,0.12); }
+        .results-emoji { font-size: 5rem; line-height: 1; margin-bottom: 10px; animation: bounceIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275); }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 900; color: white; margin: 0 auto 20px; animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) 0.2s both; }
+        .tier-perfect .score-circle { background: var(--green-main); border-bottom: 6px solid var(--green-shadow); }
+        .tier-great .score-circle { background: var(--blue-main); border-bottom: 6px solid var(--blue-shadow); }
+        .tier-good .score-circle { background: var(--yellow-main); border-bottom: 6px solid var(--yellow-shadow); color: #5a4800; }
+        .tier-try .score-circle { background: var(--orange-main); border-bottom: 6px solid var(--orange-shadow); }
+        .results-title { font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px; animation: slideUp 0.4s ease-out 0.35s both; }
+        .results-subtitle { font-size: 1.1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 18px; animation: slideUp 0.4s ease-out 0.45s both; }
+        .results-details { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; line-height: 1.8; animation: slideUp 0.4s ease-out 0.55s both; }
+
+        #confettiCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+        .stars-container { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .floating-star { position: absolute; font-size: 1.5rem; animation: floatUp 2s ease-out forwards; opacity: 0; }
+
+        /* ═══ TOAST ═══ */
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); padding: 14px 28px; border-radius: 16px; font-weight: 800; font-size: 1rem; color: white; z-index: 10000; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 8px 25px rgba(0,0,0,0.15); pointer-events: none; }
+        .toast.visible { transform: translateX(-50%) translateY(0); }
+        .toast.toast-success { background: var(--green-main); border-bottom: 3px solid var(--green-shadow); }
+        .toast.toast-error { background: var(--red-main); border-bottom: 3px solid var(--red-shadow); }
+        .toast.toast-info { background: var(--blue-main); border-bottom: 3px solid var(--blue-shadow); }
+
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.3); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes popIn { 0% { transform: scale(0) rotate(-20deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(0deg); } 100% { opacity: 0; transform: translateY(-200px) scale(1.2) rotate(45deg); } }
+        @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
+        .wiggle { animation: wiggle 0.5s ease-in-out 3; }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; gap: 10px; }
+            main { padding: 20px; }
+            .controls-wrapper { flex-direction: column; align-items: stretch; }
+            .action-buttons { flex-direction: column; }
+            td, th { padding: 12px 10px; font-size: 0.95rem; }
+            .verb-input { font-size: 0.95rem; }
+            .btn-primary { justify-content: center; font-size: 0.9rem; padding: 12px 18px; }
+            .name-banner { flex-direction: column; text-align: center; }
+            .name-banner input { width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="confettiCanvas"></canvas>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">V</div>
+            <h1>IrregularVerbs</h1>
+        </div>
+        <div class="header-stats">
+            <div class="stat-item"><span class="stat-icon">⚡</span> 104 Verbos</div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ═══ NOMBRE (opcional) ═══ -->
+        <div class="name-banner">
+            <div class="name-info">
+                <p>
+                    📝 <strong>El test es anónimo</strong>, no te preocupes.
+                    Pero si quieres que tu profe pueda corregirte personalmente, escribe tu nombre aquí.
+                    ¡Es totalmente opcional!
+                </p>
+            </div>
+            <input type="text" id="studentName" placeholder="Tu nombre (opcional)" maxlength="40">
+        </div>
+
+        <div class="controls-wrapper">
+            <div class="mode-tabs">
+                <button class="tab-btn active" data-mode="exam" onclick="setMode('exam')">Modo Examen</button>
+                <button class="tab-btn" data-mode="flash" onclick="setMode('flash')">Flashcards</button>
+                <button class="tab-btn" data-mode="reference" onclick="setMode('reference')">Diccionario</button>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="generate()"><span>↻</span> Nueva Serie</button>
+                <button class="btn-primary btn-success" id="btnCheck" onclick="checkExam()" style="display:none"><span>✓</span> Comprobar</button>
+                <button class="btn-primary btn-save" id="btnSave" onclick="saveProgress()"><span>💾</span> Guardar</button>
+                <button class="btn-primary btn-send" id="btnSend" onclick="sendResults()"><span>📨</span> Enviar</button>
+            </div>
+        </div>
+
+        <!-- MODO EXAMEN -->
+        <div id="view-exam" class="view-section fade-in">
+            <div class="card-container" id="examContainer">
+                <table>
+                    <thead><tr>
+                        <th style="width:50px;text-align:center">#</th>
+                        <th>V1 (Infinitive)</th>
+                        <th>V2 (Past Simple)</th>
+                        <th>V3 (Participle)</th>
+                        <th>Español</th>
+                    </tr></thead>
+                    <tbody id="examBody"></tbody>
+                </table>
+            </div>
+            <div class="results-panel fade-in" id="resultsPanel">
+                <div class="stars-container" id="starsContainer"></div>
+                <div class="results-emoji" id="resultsEmoji"></div>
+                <div class="score-circle" id="finalScore">0/0</div>
+                <div class="results-title" id="resultsMsg"></div>
+                <div class="results-subtitle" id="resultsSub"></div>
+                <div class="results-details" id="resultsDetails"></div>
+            </div>
+        </div>
+
+        <!-- MODO FLASHCARDS -->
+        <div id="view-flash" class="view-section fade-in" style="display:none">
+            <div class="flashcard-wrapper">
+                <div class="progress-container"><div class="progress-bar" id="fcProgressBar"></div></div>
+                <div class="flashcard" id="flashcard" onclick="onFlashcardClick()">
+                    <div class="fc-type">V1 • Infinitive</div>
+                    <div class="fc-word" id="fcWord">Cargando...</div>
+                    <div class="fc-answer" id="fcAnswer">
+                        <div class="answer-row"><span class="answer-label">V2</span><span class="answer-value" id="fcV2">—</span></div>
+                        <div class="answer-row"><span class="answer-label">V3</span><span class="answer-value" id="fcV3">—</span></div>
+                        <div class="answer-row"><span class="answer-label">ES</span><span class="answer-value es" id="fcEs">—</span></div>
+                    </div>
+                    <div class="fc-hint" id="fcHint">Toca para revelar</div>
+                </div>
+                <div class="nav-controls">
+                    <button class="nav-btn" onclick="fcNavigate(-1)">←</button>
+                    <div class="fc-counter" id="fcCounter">1/20</div>
+                    <button class="nav-btn" onclick="fcNavigate(1)">→</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODO DICCIONARIO -->
+        <div id="view-reference" class="view-section fade-in" style="display:none">
+            <div class="card-container">
+                <table>
+                    <thead><tr>
+                        <th style="width:50px;text-align:center">#</th>
+                        <th>V1 (Infinitive)</th>
+                        <th>V2 (Past Simple)</th>
+                        <th>V3 (Participle)</th>
+                        <th>Español</th>
+                    </tr></thead>
+                    <tbody id="refBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+    const allVerbs = [
+        { base:"be",           past:"was/were",       participle:"been",          spanish:"ser, estar" },
+        { base:"beat",         past:"beat",           participle:"beaten",        spanish:"golpear" },
+        { base:"become",       past:"became",         participle:"become",        spanish:"llegar a ser, convertirse" },
+        { base:"begin",        past:"began",          participle:"begun",         spanish:"empezar" },
+        { base:"bend",         past:"bent",           participle:"bent",          spanish:"doblar(se)" },
+        { base:"bet",          past:"bet",            participle:"bet",           spanish:"apostar" },
+        { base:"bite",         past:"bit",            participle:"bitten",        spanish:"morder" },
+        { base:"bleed",        past:"bled",           participle:"bled",          spanish:"sangrar" },
+        { base:"blow",         past:"blew",           participle:"blown",         spanish:"soplar" },
+        { base:"break",        past:"broke",          participle:"broken",        spanish:"romper" },
+        { base:"bring",        past:"brought",        participle:"brought",       spanish:"traer" },
+        { base:"build",        past:"built",          participle:"built",         spanish:"construir" },
+        { base:"burn",         past:"burnt/burned",   participle:"burnt/burned",  spanish:"quemar" },
+        { base:"buy",          past:"bought",         participle:"bought",        spanish:"comprar" },
+        { base:"catch",        past:"caught",         participle:"caught",        spanish:"coger, agarrar" },
+        { base:"choose",       past:"chose",          participle:"chosen",        spanish:"elegir" },
+        { base:"come",         past:"came",           participle:"come",          spanish:"venir" },
+        { base:"cost",         past:"cost",           participle:"cost",          spanish:"costar" },
+        { base:"cut",          past:"cut",            participle:"cut",           spanish:"cortar" },
+        { base:"dig",          past:"dug",            participle:"dug",           spanish:"cavar" },
+        { base:"do",           past:"did",            participle:"done",          spanish:"hacer" },
+        { base:"draw",         past:"drew",           participle:"drawn",         spanish:"dibujar" },
+        { base:"dream",        past:"dreamt/dreamed", participle:"dreamt/dreamed",spanish:"soñar" },
+        { base:"drink",        past:"drank",          participle:"drunk",         spanish:"beber" },
+        { base:"drive",        past:"drove",          participle:"driven",        spanish:"conducir" },
+        { base:"eat",          past:"ate",            participle:"eaten",         spanish:"comer" },
+        { base:"fall",         past:"fell",           participle:"fallen",        spanish:"caer(se)" },
+        { base:"feed",         past:"fed",            participle:"fed",           spanish:"alimentar" },
+        { base:"feel",         past:"felt",           participle:"felt",          spanish:"sentir(se)" },
+        { base:"fight",        past:"fought",         participle:"fought",        spanish:"luchar, pelear" },
+        { base:"find",         past:"found",          participle:"found",         spanish:"encontrar" },
+        { base:"fly",          past:"flew",           participle:"flown",         spanish:"volar" },
+        { base:"forget",       past:"forgot",         participle:"forgotten",     spanish:"olvidar" },
+        { base:"forgive",      past:"forgave",        participle:"forgiven",      spanish:"perdonar" },
+        { base:"freeze",       past:"froze",          participle:"frozen",        spanish:"congelar(se)" },
+        { base:"get",          past:"got",            participle:"got",           spanish:"conseguir; llegar" },
+        { base:"give",         past:"gave",           participle:"given",         spanish:"dar" },
+        { base:"go",           past:"went",           participle:"gone",          spanish:"ir" },
+        { base:"grow",         past:"grew",           participle:"grown",         spanish:"crecer; cultivar" },
+        { base:"hang",         past:"hanged/hung",    participle:"hanged/hung",   spanish:"colgar" },
+        { base:"have",         past:"had",            participle:"had",           spanish:"tener; haber" },
+        { base:"hear",         past:"heard",          participle:"heard",         spanish:"oír" },
+        { base:"hide",         past:"hid",            participle:"hidden",        spanish:"esconder(se)" },
+        { base:"hit",          past:"hit",            participle:"hit",           spanish:"golpear, pegar" },
+        { base:"hold",         past:"held",           participle:"held",          spanish:"sujetar" },
+        { base:"hurt",         past:"hurt",           participle:"hurt",          spanish:"herir; hacer daño; doler" },
+        { base:"keep",         past:"kept",           participle:"kept",          spanish:"guardar, mantener" },
+        { base:"know",         past:"knew",           participle:"known",         spanish:"saber, conocer" },
+        { base:"lay",          past:"laid",           participle:"laid",          spanish:"poner; extender" },
+        { base:"lead",         past:"led",            participle:"led",           spanish:"guiar, conducir" },
+        { base:"learn",        past:"learnt/learned", participle:"learnt/learned",spanish:"aprender" },
+        { base:"leave",        past:"left",           participle:"left",          spanish:"dejar; irse, salir" },
+        { base:"lend",         past:"lent",           participle:"lent",          spanish:"prestar" },
+        { base:"let",          past:"let",            participle:"let",           spanish:"permitir, dejar" },
+        { base:"lie",          past:"lay",            participle:"lain",          spanish:"tumbarse, echarse" },
+        { base:"lie (reg.)",   past:"lied",           participle:"lied",          spanish:"mentir" },
+        { base:"light",        past:"lit",            participle:"lit",           spanish:"encender" },
+        { base:"lose",         past:"lost",           participle:"lost",          spanish:"perder" },
+        { base:"make",         past:"made",           participle:"made",          spanish:"hacer, fabricar" },
+        { base:"mean",         past:"meant",          participle:"meant",         spanish:"significar, querer decir" },
+        { base:"meet",         past:"met",            participle:"met",           spanish:"conocer a; quedar con" },
+        { base:"overcome",     past:"overcame",       participle:"overcome",      spanish:"superar" },
+        { base:"pay",          past:"paid",           participle:"paid",          spanish:"pagar" },
+        { base:"put",          past:"put",            participle:"put",           spanish:"poner" },
+        { base:"quit",         past:"quit/quitted",   participle:"quit/quitted",  spanish:"dejar (de)" },
+        { base:"read",         past:"read",           participle:"read",          spanish:"leer" },
+        { base:"ride",         past:"rode",           participle:"ridden",        spanish:"montar" },
+        { base:"ring",         past:"rang",           participle:"rung",          spanish:"llamar (por teléfono)" },
+        { base:"rise",         past:"rose",           participle:"risen",         spanish:"elevarse, alzarse" },
+        { base:"run",          past:"ran",            participle:"run",           spanish:"correr" },
+        { base:"say",          past:"said",           participle:"said",          spanish:"decir" },
+        { base:"see",          past:"saw",            participle:"seen",          spanish:"ver" },
+        { base:"sell",         past:"sold",           participle:"sold",          spanish:"vender" },
+        { base:"send",         past:"sent",           participle:"sent",          spanish:"enviar" },
+        { base:"set",          past:"set",            participle:"set",           spanish:"colocar" },
+        { base:"shake",        past:"shook",          participle:"shaken",        spanish:"agitar" },
+        { base:"shine",        past:"shone",          participle:"shone",         spanish:"brillar" },
+        { base:"shoot",        past:"shot",           participle:"shot",          spanish:"disparar" },
+        { base:"show",         past:"showed",         participle:"shown",         spanish:"mostrar, enseñar" },
+        { base:"shut",         past:"shut",           participle:"shut",          spanish:"cerrar" },
+        { base:"sing",         past:"sang",           participle:"sung",          spanish:"cantar" },
+        { base:"sink",         past:"sank",           participle:"sunk",          spanish:"hundirse" },
+        { base:"sit",          past:"sat",            participle:"sat",           spanish:"sentarse" },
+        { base:"sleep",        past:"slept",          participle:"slept",         spanish:"dormir" },
+        { base:"smell",        past:"smelt/smelled",  participle:"smelt/smelled", spanish:"oler" },
+        { base:"speak",        past:"spoke",          participle:"spoken",        spanish:"hablar" },
+        { base:"spell",        past:"spelt/spelled",  participle:"spelt/spelled", spanish:"deletrear" },
+        { base:"spend",        past:"spent",          participle:"spent",         spanish:"gastar; pasar (tiempo)" },
+        { base:"stand",        past:"stood",          participle:"stood",         spanish:"estar de pie" },
+        { base:"steal",        past:"stole",          participle:"stolen",        spanish:"robar" },
+        { base:"stick",        past:"stuck",          participle:"stuck",         spanish:"pegar" },
+        { base:"sting",        past:"stung",          participle:"stung",         spanish:"picar (insecto)" },
+        { base:"sweep",        past:"swept",          participle:"swept",         spanish:"barrer" },
+        { base:"swim",         past:"swam",           participle:"swum",          spanish:"nadar" },
+        { base:"take",         past:"took",           participle:"taken",         spanish:"coger; llevar" },
+        { base:"teach",        past:"taught",         participle:"taught",        spanish:"enseñar" },
+        { base:"tear",         past:"tore",           participle:"torn",          spanish:"romper, desgarrar" },
+        { base:"tell",         past:"told",           participle:"told",          spanish:"decir, contar" },
+        { base:"think",        past:"thought",        participle:"thought",       spanish:"pensar" },
+        { base:"throw",        past:"threw",          participle:"thrown",        spanish:"tirar; lanzar" },
+        { base:"understand",   past:"understood",     participle:"understood",    spanish:"comprender, entender" },
+        { base:"wake up",      past:"woke up",        participle:"woken up",      spanish:"despertar(se)" },
+        { base:"wear",         past:"wore",           participle:"worn",          spanish:"llevar puesto; ponerse" },
+        { base:"win",          past:"won",            participle:"won",           spanish:"ganar" },
+        { base:"write",        past:"wrote",          participle:"written",       spanish:"escribir" }
+    ];
+
+    const AppState = {
+        currentMode: 'exam',
+        flashVerbs: [], flashIndex: 0, flashRevealed: false,
+        examSize: 20, examStartTime: null, examChecked: false
+    };
+
+    // ══════════════════════════════════════════════════════════
+    //  URL DE TU GOOGLE APPS SCRIPT (Web App)
+    //  ─────────────────────────────────────────────────────
+    //  Sigue las instrucciones del README para crear el script
+    //  y pega aquí la URL que te da al hacer "Deploy > New deployment"
+    // ══════════════════════════════════════════════════════════
+    const SHEET_URL = 'PEGA_AQUI_TU_URL_DE_GOOGLE_APPS_SCRIPT';
+
+    // ── Utils ──
+    const shuffle = (arr) => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+    const safeGetEl = (id) => document.getElementById(id);
+
+    function showToast(message, type) {
+        type = type || 'success';
+        const toast = safeGetEl('toast');
+        toast.textContent = message;
+        toast.className = 'toast toast-' + type;
+        void toast.offsetWidth;
+        toast.classList.add('visible');
+        setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+
+    // ── Confetti ──
+    function launchConfetti(duration) {
+        duration = duration || 3000;
+        const canvas = safeGetEl('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const colors = ['#58cc02','#1cb0f6','#ffc800','#ff4b4b','#ce82ff','#ff9600'];
+        const particles = [];
+        for (let i=0; i<150; i++) {
+            particles.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height-canvas.height,
+                w:Math.random()*10+5, h:Math.random()*6+3, color:colors[Math.floor(Math.random()*colors.length)],
+                vx:(Math.random()-0.5)*4, vy:Math.random()*3+2, rot:Math.random()*360, rotSpeed:(Math.random()-0.5)*10 });
+        }
+        const start = Date.now();
+        function frame() {
+            const el = Date.now()-start;
+            if (el>duration) { ctx.clearRect(0,0,canvas.width,canvas.height); return; }
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.globalAlpha = el>duration-500 ? (duration-el)/500 : 1;
+            particles.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.rot+=p.rotSpeed; p.vy+=0.04;
+                ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+                ctx.fillStyle=p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore(); });
+            requestAnimationFrame(frame);
+        }
+        frame();
+    }
+
+    function launchStars(container, count) {
+        container.innerHTML = '';
+        const emojis = ['⭐','✨','🌟'];
+        for (let i=0; i<(count||15); i++) {
+            const star = document.createElement('span');
+            star.className = 'floating-star';
+            star.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+            star.style.left = Math.random()*100+'%'; star.style.bottom = '0';
+            star.style.animationDelay = (Math.random()*1.5)+'s';
+            star.style.fontSize = (1+Math.random()*1.5)+'rem';
+            container.appendChild(star);
+        }
+    }
+
+    // ── Guardar / Cargar (localStorage) ──
+    const STORAGE_KEY = 'iv_progress';
+
+    function saveProgress() {
+        if (AppState.currentMode !== 'exam') { showToast('El guardado solo funciona en Modo Examen','info'); return; }
+        const rows = safeGetEl('examBody').querySelectorAll('tr');
+        const examData = [];
+        rows.forEach(tr => {
+            const cells = tr.querySelectorAll('td');
+            const rowData = { cells: [] };
+            for (let i=1; i<cells.length; i++) {
+                const td = cells[i]; const input = td.querySelector('.verb-input');
+                if (input) { rowData.cells.push({ type:'input', value:input.value, correct:input.dataset.correct,
+                    status: input.classList.contains('correct')?'correct':input.classList.contains('incorrect')?'incorrect':'pending' });
+                } else { rowData.cells.push({ type:'text', value:td.textContent, isSpanish:td.classList.contains('col-es') }); }
+            }
+            examData.push(rowData);
+        });
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ examData, examChecked:AppState.examChecked, examStartTime:AppState.examStartTime, savedAt:new Date().toISOString() }));
+            showToast('¡Progreso guardado! 🎉','success');
+        } catch(e) { showToast('Error al guardar','error'); }
+    }
+
+    function loadProgress() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return false;
+            const s = JSON.parse(raw);
+            if (!s.examData || s.examData.length===0) return false;
+            setMode('exam');
+            AppState.examChecked = s.examChecked||false;
+            AppState.examStartTime = s.examStartTime||Date.now();
+            const tbody = safeGetEl('examBody'); tbody.innerHTML = '';
+            s.examData.forEach((rowData, idx) => {
+                const tr = document.createElement('tr');
+                const numTd = document.createElement('td');
+                numTd.style.textAlign='center'; numTd.style.color='var(--text-muted)'; numTd.textContent=idx+1;
+                tr.appendChild(numTd);
+                rowData.cells.forEach(cell => {
+                    const td = document.createElement('td');
+                    if (cell.type==='input') {
+                        const inp = document.createElement('input');
+                        inp.type='text'; inp.className='verb-input'; inp.autocomplete='off';
+                        inp.dataset.correct=cell.correct; inp.value=cell.value;
+                        if (cell.status==='correct') { inp.classList.add('correct'); inp.readOnly=true; }
+                        else if (cell.status==='incorrect') { inp.classList.add('incorrect'); inp.readOnly=true;
+                            const badge=document.createElement('span'); badge.className='correction-badge';
+                            badge.textContent='Respuesta: '+cell.correct;
+                            td.appendChild(inp); td.appendChild(badge); tr.appendChild(td); return; }
+                        if (AppState.examChecked) inp.readOnly=true;
+                        td.appendChild(inp);
+                    } else { td.className=cell.isSpanish?'col-es':''; td.textContent=cell.value; }
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            safeGetEl('btnCheck').style.display = AppState.examChecked?'none':'flex';
+            showToast('Progreso restaurado 📋','info');
+            return true;
+        } catch(e) { return false; }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // ENVIAR RESULTADOS → Google Sheets
+    // ══════════════════════════════════════════════════════════
+    function sendResults() {
+        if (AppState.currentMode !== 'exam') { showToast('Solo puedes enviar desde Modo Examen','info'); return; }
+        const inputs = document.querySelectorAll('#examBody .verb-input');
+        if (inputs.length === 0) { showToast('No hay examen para enviar','error'); return; }
+
+        let hits = 0;
+        const total = inputs.length;
+        const failures = [];
+        const details = [];
+
+        inputs.forEach(input => {
+            const userVal = input.value.trim().toLowerCase();
+            const correctRaw = input.dataset.correct;
+            const options = correctRaw.toLowerCase().split(/[\/,]/).map(s => s.trim());
+            const isCorrect = options.includes(userVal);
+            if (isCorrect) hits++;
+            details.push((isCorrect?'✔':'✘')+' "' + (input.value.trim()||'(vacío)') + '" → "'+correctRaw+'"');
+            if (!isCorrect) failures.push((input.value.trim()||'(vacío)') + ' → ' + correctRaw);
+        });
+
+        const pct = ((hits/total)*100).toFixed(1);
+        const elapsed = AppState.examStartTime ? Math.round((Date.now()-AppState.examStartTime)/1000) : 0;
+        const mins = Math.floor(elapsed/60);
+        const secs = elapsed % 60;
+        const studentName = safeGetEl('studentName').value.trim() || 'Anónimo';
+
+        // Datos que se envían como JSON al Google Apps Script
+        const payload = {
+            fecha: new Date().toLocaleString('es-ES'),
+            nombre: studentName,
+            aciertos: hits,
+            total: total,
+            porcentaje: pct + '%',
+            tiempo: mins + 'm ' + secs + 's',
+            num_errores: failures.length,
+            errores: failures.join(' | '),
+            detalle: details.join(' | ')
+        };
+
+        const btn = safeGetEl('btnSend');
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳</span> Enviando...';
+
+        fetch(SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            showToast('¡Resultados enviados! 📬','success');
+        })
+        .catch(err => {
+            console.error('Error enviando a Google Sheets:', err);
+            showToast('Error al enviar, inténtalo de nuevo','error');
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<span>📨</span> Enviar';
+        });
+    }
+
+    // ── Routing ──
+    function setMode(mode) {
+        if (!['exam','flash','reference'].includes(mode)) mode='exam';
+        AppState.currentMode = mode;
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.mode===mode));
+        ['exam','flash','reference'].forEach(sec => { const el=safeGetEl('view-'+sec); if(el) el.style.display=(sec===mode)?'block':'none'; });
+        safeGetEl('btnCheck').style.display = (mode==='exam' && !AppState.examChecked)?'flex':'none';
+        safeGetEl('btnSave').style.display = (mode==='exam')?'flex':'none';
+        safeGetEl('btnSend').style.display = (mode==='exam')?'flex':'none';
+        if (mode==='reference') buildReference();
+        if (mode==='flash') buildFlash();
+    }
+
+    function generate() {
+        if (AppState.currentMode==='exam') generateExam();
+        if (AppState.currentMode==='flash') buildFlash();
+    }
+
+    // ── Examen ──
+    function generateExam() {
+        safeGetEl('resultsPanel').style.display='none';
+        safeGetEl('resultsPanel').className='results-panel fade-in';
+        safeGetEl('btnCheck').style.display='flex';
+        safeGetEl('btnCheck').disabled=false;
+        AppState.examChecked=false; AppState.examStartTime=Date.now();
+        const selected=shuffle(allVerbs).slice(0,AppState.examSize);
+        const cols=['base','past','participle','spanish'];
+        const tbody=safeGetEl('examBody'); if(!tbody)return; tbody.innerHTML='';
+        selected.forEach((verb,idx) => {
+            const blanks=shuffle([0,1,2,3]).slice(0,2);
+            const tr=document.createElement('tr');
+            const numTd=document.createElement('td');
+            numTd.style.textAlign='center'; numTd.style.color='var(--text-muted)'; numTd.textContent=idx+1;
+            tr.appendChild(numTd);
+            cols.forEach((col,ci) => {
+                const td=document.createElement('td');
+                if (blanks.includes(ci)) { td.innerHTML='<input type="text" class="verb-input" autocomplete="off" data-correct="'+verb[col]+'">'; }
+                else { td.className=ci===3?'col-es':''; td.textContent=verb[col]; }
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+        const firstInput=tbody.querySelector('input');
+        if(firstInput) firstInput.focus();
+    }
+
+    function checkExam() {
+        const inputs=document.querySelectorAll('#examBody .verb-input');
+        if(inputs.length===0) return;
+        let hits=0; const failures=[];
+        inputs.forEach(input => {
+            input.readOnly=true;
+            const userVal=input.value.trim().toLowerCase();
+            const options=input.dataset.correct.toLowerCase().split(/[\/,]/).map(s=>s.trim());
+            if(options.includes(userVal)){input.classList.add('correct');hits++;}
+            else{input.classList.add('incorrect');
+                const badge=document.createElement('span');badge.className='correction-badge fade-in';
+                badge.textContent='Respuesta: '+input.dataset.correct;
+                input.parentElement.appendChild(badge);failures.push(input.dataset.correct);}
+        });
+        AppState.examChecked=true; safeGetEl('btnCheck').style.display='none';
+        const total=inputs.length; const pct=((hits/total)*100).toFixed(1);
+        const elapsed=AppState.examStartTime?Math.round((Date.now()-AppState.examStartTime)/1000):0;
+        const mins=Math.floor(elapsed/60); const secs=elapsed%60;
+        const ratio=hits/total;
+        const panel=safeGetEl('resultsPanel'); panel.className='results-panel fade-in';
+        const starsContainer=safeGetEl('starsContainer'); starsContainer.innerHTML='';
+        let emoji,title,subtitle,tier;
+        if(ratio===1){tier='tier-perfect';emoji='🏆';title='¡¡PERFECTO!! ¡Eres increíble!';subtitle='¡Has acertado TODAS! Eres un auténtico campeón de los verbos 🌟';launchConfetti(4000);}
+        else if(ratio>=0.8){tier='tier-great';emoji='🔥';title='¡Genial! ¡Casi perfecto!';subtitle='¡Lo estás haciendo súper bien! Solo te faltan unos poquitos 💪';launchStars(starsContainer,20);}
+        else if(ratio>=0.5){tier='tier-good';emoji='💪';title='¡Buen trabajo!';subtitle='¡Vas por buen camino! Repasa los que te fallan y la próxima vez será pan comido 🍞';launchStars(starsContainer,8);}
+        else{tier='tier-try';emoji='🌱';title='¡Sigue intentándolo!';subtitle='¡No te preocupes! Cada intento te hace mejor. ¡Tú puedes, ánimo! 🚀';}
+        panel.classList.add(tier);
+        safeGetEl('resultsEmoji').textContent=emoji;
+        safeGetEl('resultsEmoji').className='results-emoji';
+        void safeGetEl('resultsEmoji').offsetWidth;
+        safeGetEl('resultsEmoji').style.animation='none';
+        void safeGetEl('resultsEmoji').offsetWidth;
+        safeGetEl('resultsEmoji').style.animation='';
+        safeGetEl('finalScore').textContent=hits+'/'+total;
+        safeGetEl('resultsMsg').textContent=title;
+        safeGetEl('resultsSub').textContent=subtitle;
+        safeGetEl('resultsDetails').innerHTML='Porcentaje: <strong>'+pct+'%</strong> &nbsp;|&nbsp; Tiempo: <strong>'+mins+'m '+secs+'s</strong> &nbsp;|&nbsp; Fallos: <strong>'+failures.length+'</strong>';
+        if(ratio<0.5){setTimeout(()=>safeGetEl('resultsEmoji').classList.add('wiggle'),600);}
+        panel.style.display='block'; panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+        saveProgress();
+    }
+
+    // ── Flashcards ──
+    function buildFlash() { AppState.flashVerbs=shuffle(allVerbs).slice(0,AppState.examSize); AppState.flashIndex=0; renderFlashcard(); }
+
+    function renderFlashcard() {
+        if(!AppState.flashVerbs.length)return; AppState.flashRevealed=false;
+        const verb=AppState.flashVerbs[AppState.flashIndex];
+        safeGetEl('fcWord').textContent=verb.base; safeGetEl('fcV2').textContent=verb.past;
+        safeGetEl('fcV3').textContent=verb.participle; safeGetEl('fcEs').textContent=verb.spanish;
+        safeGetEl('fcAnswer').classList.remove('visible');
+        safeGetEl('fcHint').textContent='Toca para revelar';
+        const c=AppState.flashIndex+1; const t=AppState.flashVerbs.length;
+        safeGetEl('fcCounter').textContent=c+'/'+t;
+        safeGetEl('fcProgressBar').style.width=((c/t)*100)+'%';
+    }
+
+    function revealCard() { if(AppState.flashRevealed)return; AppState.flashRevealed=true; safeGetEl('fcAnswer').classList.add('visible'); safeGetEl('fcHint').textContent='Toca de nuevo para avanzar →'; }
+
+    function fcNavigate(dir) { const n=AppState.flashIndex+dir; if(n>=0&&n<AppState.flashVerbs.length){AppState.flashIndex=n;renderFlashcard();} }
+
+    function onFlashcardClick() {
+        if(!AppState.flashRevealed){revealCard();}
+        else{if(AppState.flashIndex>=AppState.flashVerbs.length-1){buildFlash();showToast('¡Nueva ronda de tarjetas! 🃏','info');}else{fcNavigate(1);}}
+    }
+
+    // ── Diccionario ──
+    function buildReference() {
+        const tbody=safeGetEl('refBody'); if(!tbody)return; tbody.innerHTML='';
+        allVerbs.forEach((verb,i) => {
+            const tr=document.createElement('tr');
+            tr.innerHTML='<td style="text-align:center;color:var(--text-muted);">'+(i+1)+'</td>'
+                +'<td style="color:var(--blue-main);">'+verb.base+'</td><td>'+verb.past+'</td>'
+                +'<td>'+verb.participle+'</td><td class="col-es">'+verb.spanish+'</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    // ── Event listeners ──
+    document.addEventListener('keydown', e => {
+        if(AppState.currentMode==='flash'){
+            if(e.key==='ArrowRight')fcNavigate(1); if(e.key==='ArrowLeft')fcNavigate(-1);
+            if(e.key===' '||e.key==='Enter'){e.preventDefault();onFlashcardClick();}
+        } else if(AppState.currentMode==='exam'){
+            if(e.key==='Enter'){const b=safeGetEl('btnCheck');if(b&&b.style.display!=='none')checkExam();}
+        }
+    });
+
+    // ── Inicio ──
+    setMode('exam');
+    if(!loadProgress()) generateExam();
+    </script>
+</body>
+</html>
